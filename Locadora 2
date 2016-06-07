@@ -1,0 +1,258 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <locale>
+
+struct dadosautomovel{
+	char modelo[20]; //modelo do automovel
+	char placa[20]; //sem o traço
+	char cor[20];
+	int codcar;
+};
+
+struct dadoscliente{
+	char nome[100];
+	char endereco[100]; //nome da rua e cidade
+	int telefone; //com código de área e sem traço  
+};
+
+struct dadosreserva{
+	char nome[100];
+	int codcar;
+};
+
+int n = 0;
+int na = 0;
+int nr = 0;
+struct dadoscliente *cliente = 0;
+struct dadosautomovel *automovel = 0;
+struct dadosreserva *reserva = 0;
+
+void Prazo_Entregas()
+{
+	system("cls");
+
+}
+
+void Consultar_Reserva()
+{
+	system("cls");
+	printf("-------------------------------\n");
+	printf("Consultar automoveis reservados\n");
+	printf("-------------------------------\n");
+
+	int i;
+	for (i = 0; i < n; i++)
+	{
+		printf("\nCliente %d",n);
+		printf("\nNome do cliente: %s\n", cliente[i].nome);
+		fflush(stdin);
+		printf("Codigo do automovel %s\n", automovel[i].codcar);
+		fflush(stdin);
+		printf("____________________________________\n");
+	}
+	system("PAUSE");
+	return;
+}
+
+void Reservar_Automovel()
+{
+	system("cls");
+	printf("------------------\n");
+	printf("Reservar automovel\n");
+	printf("------------------\n");
+
+	reserva = (dadosreserva*)realloc(reserva, (nr + 1)*sizeof(dadosreserva));
+
+	printf("\nDigite o nome do cliente: ");
+	scanf("%s", &cliente[n].nome);
+	printf("\nDigite o código do automovel: ");
+	scanf("%s", &automovel[na].codcar);
+	printf("\nReserva efetuada com sucesso!\n");
+	nr++;
+	system("PAUSE");
+	return;
+}
+
+void Gerenciamentos()
+{
+	system("cls");
+	int escolha = 0;
+
+	printf("--------------\n");
+	printf("Gerenciamentos\n");
+	printf("--------------\n");
+
+	printf("  Digite o numero referente a opcao desejada:\n");
+	printf("  1- Efetuar reserva de automovel\n");
+	printf("  2- Consultar reservas\n");
+	printf("  3- Consultar prazos de entregas\n");
+	printf("Opcao: ");
+	scanf("%i", &escolha);
+	fflush(stdin);
+
+	switch (escolha)
+	{
+	case 1:
+		Reservar_Automovel();
+		break;
+	case 2:
+		Consultar_Reserva();
+		break;
+	case 3:
+		Prazo_Entregas();
+		break;
+	default:
+		printf("Opcao invalida, digite a opcao novamente:\n ");
+	}
+	return;
+}
+
+void Automoveis()
+{
+	system("cls");
+	printf("---------------------\n");
+	printf("Cadastro de Automovel\n");
+	printf("---------------------\n");
+
+	automovel = (dadosautomovel*)realloc(automovel, (na + 1)*sizeof(dadosautomovel));
+
+	printf("\nAutomovel %d", na + 1);
+	printf("\nModelo: ");
+	scanf("%s", automovel[na].modelo);
+	fflush(stdin);
+	printf("Placa: ");
+	scanf("%s", automovel[na].placa);
+	fflush(stdin);
+	printf("Cor: ");
+	scanf("%s", automovel[na].cor);
+	fflush(stdin);
+	printf("Codigo do Automovel: ");
+	scanf("%d", automovel[na].codcar);
+	printf("\nAutomovel cadastrado com sucesso!\n");
+	na++;
+	system("PAUSE");
+	return;
+}
+
+void Cadastro_Clientes()
+{
+	system("cls");
+	printf("--------------------\n");
+	printf("Cadastro de Clientes\n");
+	printf("--------------------\n");
+
+	cliente = (dadoscliente*)realloc(cliente, (n + 1)*sizeof(dadoscliente));
+
+	printf("\nCliente %d", n + 1);
+	printf("\nNome: ");
+	scanf("%s", &cliente[n].nome);
+	fflush(stdin);
+	printf("Endereco: ");
+	scanf("%s", &cliente[n].endereco);
+	fflush(stdin);
+	printf("Telefone: ");
+	scanf("%i", &cliente[n].telefone);
+	fflush(stdin);
+	printf("\nCliente cadastrado com sucesso!\n");
+	n++;
+	system("PAUSE");
+	return;
+}
+
+void Relatorio_Clientes()
+{
+	system("cls");
+	int i;
+	for (i = 0; i < n; i++)
+	{
+		printf("\nCliente %d", i+1);
+		printf("\nNome: %s\n", cliente[i].nome);
+		fflush(stdin);
+		printf("Endereco: %s\n", cliente[i].endereco);
+		fflush(stdin);
+		printf("Telefone: %i\n", cliente[i].telefone);
+		fflush(stdin);
+		printf("____________________________________\n");
+	}
+	system("PAUSE");
+	return;
+}
+
+void Clientes()
+{
+	system("cls");
+	int escolha = 0;
+
+	printf("--------\n");
+	printf("Clientes\n");
+	printf("--------\n");
+
+	printf("  Digite o numero referente a opcao desejada:\n");
+	printf("  1- Cadastrar Cliente\n");
+	printf("  2- Relatorio de Clientes\n");
+	printf("Opcao: ");
+	scanf("%i", &escolha);
+	fflush(stdin);
+
+	switch (escolha)
+	{
+	case 1:
+		Cadastro_Clientes();
+		break;
+	case 2:
+		Relatorio_Clientes();
+		break;
+	default:
+		printf("Opcao invalida, digite a opcao novamente:\n ");
+	}
+	return;
+}
+
+int menuprincipal()
+{
+	system("cls");
+	int escolha = 0;
+	printf("--------------------------\n");
+	printf("LUC - Locadora de Veiculos\n");
+	printf("--------------------------\n");
+	printf("  Digite o numero referente a opcao desejada:\n");
+	printf("  1- Clientes\n");
+	printf("  2- Cadastrar novo automovel\n");
+	printf("  3- Gerenciamento de Locacoes\n");
+	printf("  4- Para encerrar\n");
+	printf("Opcao: ");
+	scanf("%i", &escolha);
+	fflush(stdin);
+
+	switch (escolha)
+	{
+	case 1:
+		Clientes();
+		break;
+	case 2:
+		Automoveis();
+		break;
+	case 3:
+		Gerenciamentos();
+		break;
+	case 4:
+		printf("Obrigado por usar nosso sistema, ate mais!\n ");
+		system("PAUSE");
+		exit(0);
+		break;
+	default:
+		printf("Opcao invalida, digite a opcao novamente:\n ");
+	}
+	return 1;
+}
+
+int main()
+{
+	while (1)
+	{
+		menuprincipal();
+	}
+	return 1;
+}
+
