@@ -19,6 +19,8 @@ struct dadoscliente{
 struct dadosreserva{
 	char nome[100];
 	int codcar;
+	int dia, mes, ano;
+	int reservadias; //aumenta conforme dias, meses e anos solicitado na reserva? ou define outras variaveis
 };
 
 int n = 0;
@@ -28,9 +30,19 @@ struct dadoscliente *cliente = 0;
 struct dadosautomovel *automovel = 0;
 struct dadosreserva *reserva = 0;
 
+void Devolucao()
+{	//funcao para calcular os prazos de devolucao de acordo com a quantidade de dias reservados
+	
+}
+
 void Prazo_Entregas()
 {
 	system("cls");
+	printf("---------------------------------\n");
+	printf("Datas de devolucao dos automoveis\n");
+	printf("---------------------------------\n");
+
+
 
 }
 
@@ -42,13 +54,18 @@ void Consultar_Reserva()
 	printf("-------------------------------\n");
 
 	int i;
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) // esta dando erro nas datas, nao consegui acertar essa parte
 	{
-		printf("\nCliente %d",n);
-		printf("\nNome do cliente: %s\n", cliente[i].nome);
+		printf("\nCliente %d", n);
+		printf("Nome do cliente: %s\n", cliente[i].nome);
+		printf("Dados do cliente:\nEndereco: %s\nTelefone: %d\n", &cliente[i].endereco, &cliente[i].telefone);
 		fflush(stdin);
-		printf("Codigo do automovel %s\n", automovel[i].codcar);
+		printf("\nCodigo do automovel %d\n", automovel[i].codcar);
+		printf("Dados do automovel:\nModelo: %s\nPlaca: %s\nCor: %s\n", &automovel[i].modelo, &automovel[i].placa, &automovel[i].cor);
 		fflush(stdin);
+		printf("\nData de locacao: %d / %d / %d\n", &reserva[i].dia, &reserva[i].mes, &reserva[i].ano); // valores absurdos
+		fflush(stdin);
+		printf("\nData de devolucao: %d / %d / %d\n", &reserva[i].dia, &reserva[i].mes, &reserva[i].ano);
 		printf("____________________________________\n");
 	}
 	system("PAUSE");
@@ -64,10 +81,16 @@ void Reservar_Automovel()
 
 	reserva = (dadosreserva*)realloc(reserva, (nr + 1)*sizeof(dadosreserva));
 
-	printf("\nDigite o nome do cliente: ");
-	scanf("%s", &cliente[n].nome);
-	printf("\nDigite o código do automovel: ");
-	scanf("%s", &automovel[na].codcar);
+	printf("Digite o nome do cliente: ");
+	scanf("%s", &cliente[n].nome); //usar nr o n?
+	printf("Digite o codigo do automovel: ");
+	scanf("%d", &automovel[na].codcar); // usar nr ou na?
+	printf("Data de locacao: "); // como colocar na mesma linha?
+	scanf("%d", &reserva[nr].dia);
+	scanf("%d", &reserva[nr].mes);
+	scanf("%d", &reserva[nr].ano);
+	printf("Reservar por quantos dias? "); //reservar por dias, meses e anos?
+	scanf("%d", &reserva[nr].reservadias);
 	printf("\nReserva efetuada com sucesso!\n");
 	nr++;
 	system("PAUSE");
@@ -119,16 +142,16 @@ void Automoveis()
 
 	printf("\nAutomovel %d", na + 1);
 	printf("\nModelo: ");
-	scanf("%s", automovel[na].modelo);
+	scanf("%s", &automovel[na].modelo);
 	fflush(stdin);
 	printf("Placa: ");
-	scanf("%s", automovel[na].placa);
+	scanf("%s", &automovel[na].placa);
 	fflush(stdin);
 	printf("Cor: ");
-	scanf("%s", automovel[na].cor);
+	scanf("%s", &automovel[na].cor);
 	fflush(stdin);
 	printf("Codigo do Automovel: ");
-	scanf("%d", automovel[na].codcar);
+	scanf("%d", &automovel[na].codcar);
 	printf("\nAutomovel cadastrado com sucesso!\n");
 	na++;
 	system("PAUSE");
@@ -166,7 +189,7 @@ void Relatorio_Clientes()
 	int i;
 	for (i = 0; i < n; i++)
 	{
-		printf("\nCliente %d", i+1);
+		printf("\nCliente %d", i + 1);
 		printf("\nNome: %s\n", cliente[i].nome);
 		fflush(stdin);
 		printf("Endereco: %s\n", cliente[i].endereco);
@@ -255,4 +278,3 @@ int main()
 	}
 	return 1;
 }
-
